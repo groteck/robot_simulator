@@ -59,7 +59,7 @@ class RobotSimulator
         else
           'You are on the border of the surface, '\
             "You can not continue to the #{method_name.upcase}.\n"\
-            'Please continue to in a different direction,'\
+            'Please continue to a different direction,'\
             " available directions are: "\
             "#{(Robot::DIRECTIONS - [method_name.to_s.upcase]).join(', ')}"
         end

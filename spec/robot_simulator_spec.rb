@@ -75,7 +75,7 @@ describe RobotSimulator do
     it 'returns border message when the bot is on the border' do
       msg = 'You are on the border of the surface, '\
         "You can not continue to the NORTH.\n"\
-        'Please continue to in a different direction,'\
+        'Please continue to a different direction,'\
         ' available directions are: '\
         "EAST, SOUTH, WEST"
 
