@@ -1,3 +1,13 @@
 #!/usr/bin/env ruby
 
-require "robot_simulator"
+require 'robot_simulator'
+
+puts 'Wellcome to the Robot Simulator'
+puts "Version: #{RobotSimulator::VERSION}"
+puts "Pease place the bot into the surface with the order PLACE"
+puts "  Example: PLACE 3 2 NORTH"
+puts "  place a bot on the position 3,2 and the frontage to the north"
+RobotSimulator.place(STDIN.gets)
+puts 'Now you can give some commands to your robot'
+puts 'The avaliable commands are: MOVE, LEFT, RIGHT and REPORT'
+RobotSimulator.robot_command(STDIN.gets)

@@ -14,7 +14,7 @@ describe RobotSimulator::Location do
 
     it 'raise an exception if the next north location is out of the surface' do
       expect{top_border_location.north}
-      .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
+        .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
     end
   end
 
@@ -25,7 +25,7 @@ describe RobotSimulator::Location do
 
     it 'raise an exception if the next east location is out of the surface' do
       expect{right_border_location.east}
-      .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
+        .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
     end
   end
 
@@ -36,7 +36,7 @@ describe RobotSimulator::Location do
 
     it 'raise an exception if the next south location is out of the surface' do
       expect{bottom_border_location.south}
-      .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
+        .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
     end
   end
 
@@ -47,7 +47,14 @@ describe RobotSimulator::Location do
 
     it 'raise an exception if the next west location is out of the surface' do
       expect{left_border_location.west}
-      .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
+        .to raise_error(RobotSimulator::Location::OutOfSurfaceException)
+    end
+  end
+
+  describe '.report' do
+    it 'returns the @axis_y and @axis_x' do
+      expect(center_location.report).to include axis(center_location)[:y].to_s
+      expect(center_location.report).to include axis(center_location)[:x].to_s
     end
   end
 end

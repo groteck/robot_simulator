@@ -33,12 +33,17 @@ class RobotSimulator
       self.class.new(@axis_y, @axis_x - 1)
     end
 
+    def report
+      "#{@axis_y}, #{@axis_x}"
+    end
+
     private
 
     def out_of_surface(method_name)
       msg =
         'You are on the border of the surface, '\
-        "You can not continue to the #{method_name}."
+        "You can not continue to the #{method_name}.\n"\
+        'Please continue to a different location'
 
       raise OutOfSurfaceException.new(msg)
     end

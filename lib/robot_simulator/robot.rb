@@ -13,6 +13,10 @@ class RobotSimulator
       @location = @location.send(@frontage.downcase)
     end
 
+    def report
+      "position: #{@location.report}, frontage: #{@frontage}"
+    end
+
     # Define left and right methods
     SIDES.each do |side_name, side_value|
       define_method(side_name) do

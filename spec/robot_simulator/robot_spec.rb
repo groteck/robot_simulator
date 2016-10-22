@@ -44,4 +44,13 @@ describe RobotSimulator::Robot do
       expect(axis(subject.move)[:x]).to be < axis(location)[:x]
     end
   end
+
+  describe '.report' do
+    it 'returns the @location.report and the @frontage' do
+      expect(subject.report).to include location_axis(subject)[:y].to_s
+      expect(subject.report).to include location_axis(subject)[:x].to_s
+      expect(subject.report)
+        .to include subject.instance_variable_get(:@frontage)
+    end
+  end
 end
