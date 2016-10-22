@@ -1,4 +1,4 @@
-# RobotSimulator
+# RobotSimulator [![Build Status](https://travis-ci.org/groteck/robot_simulator.svg?branch=master)](https://travis-ci.org/groteck/robot_simulator)
 
 This is a coding challenge for askCharlie, you can find the main specs in https://github.com/askcharlie/toy_robot
 
