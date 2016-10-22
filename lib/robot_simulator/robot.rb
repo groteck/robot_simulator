@@ -1,4 +1,6 @@
 class RobotSimulator
+  # This class represents the robot,
+  # and handle the robot instructions
   class Robot
     DIRECTIONS = %w(NORTH EAST SOUTH WEST)
     SIDES = { left: 1, right: 3 }

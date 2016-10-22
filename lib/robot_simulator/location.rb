@@ -11,6 +11,7 @@ class RobotSimulator
     def initialize(axis_y, axis_x)
       @axis_y = axis_y
       @axis_x = axis_x
+      validate_axis!
     end
 
     def north
@@ -39,11 +40,29 @@ class RobotSimulator
 
     private
 
+    def validate_axis!
+      unless @axis_y <= MAX_AXIS_VAL &&
+        @axis_y >= MIN_AXIS_VAL &&
+        @axis_x <= MAX_AXIS_VAL &&
+        @axis_x >= MIN_AXIS_VAL
+
+        out_of_surface(__method__)
+      end
+    end
+
     def out_of_surface(method_name)
       msg =
-        'You are on the border of the surface, '\
-        "You can not continue to the #{method_name}.\n"\
-        'Please continue to a different location'
+        if method_name.to_s == 'validate_axis!'
+          "The max number for locations is #{MAX_AXIS_VAL}. "\
+            "The min number for locations is #{MIN_AXIS_VAL}\n"\
+            'Please place the robot into this values'
+        else
+          'You are on the border of the surface, '\
+            "You can not continue to the #{method_name.upcase}.\n"\
+            'Please continue to in a different direction,'\
+            " available directions are: "\
+            "#{(Robot::DIRECTIONS - [method_name.to_s.upcase]).join(', ')}"
+        end
 
       raise OutOfSurfaceException.new(msg)
     end

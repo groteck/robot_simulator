@@ -15,4 +15,5 @@ end
 
 RSpec.configure do |c|
     c.include Helpers
+    c.mock_with :rspec
 end
