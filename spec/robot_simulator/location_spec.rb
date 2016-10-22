@@ -7,13 +7,6 @@ describe RobotSimulator::Location do
   let(:bottom_border_location) { described_class.new(0,2) }
   let(:left_border_location) { described_class.new(2,0) }
 
-  def axis(location)
-    {
-      y: location.instance_variable_get(:@axis_y),
-      x: location.instance_variable_get(:@axis_x)
-    }
-  end
-
   describe '.north' do
     it 'retunrs the next location in north position' do
       expect(axis(center_location)[:y]).to be < axis(center_location.north)[:y]
