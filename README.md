@@ -1,28 +1,17 @@
 # RobotSimulator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/robot_simulator`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This is a coding challenge for askCharlie, you can find the main specs in https://github.com/askcharlie/toy_robot
 
 ## Installation
 
-Add this line to your application's Gemfile:
+This gem is not published in ruby gems so to install this gem you should follow this steps:
 
-```ruby
-gem 'robot_simulator'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install robot_simulator
+1. Clone this project.
+2. Run `bundle exec rake install` from the root_path of this project.
 
 ## Usage
 
-TODO: Write usage instructions here
+Run `robot_simulator` and insert your commands.
 
 ## Development
 

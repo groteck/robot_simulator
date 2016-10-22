@@ -1,5 +1,5 @@
 require "robot_simulator/version"
+require "robot_simulator/location"
 
-module RobotSimulator
-  # Your code goes here...
+class RobotSimulator
 end
