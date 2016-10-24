@@ -57,8 +57,8 @@ class RobotSimulator
             "The min number for locations is #{MIN_AXIS_VAL}\n"\
             'Please place the robot into this values'
         else
-          'You are on the border of the surface, '\
-            "You can not continue to the #{method_name.upcase}.\n"\
+          'The robot is on the border of the surface, '\
+            "The robot can not continue to the #{method_name.upcase}.\n"\
             'Please continue to a different direction,'\
             " available directions are: "\
             "#{(Robot::DIRECTIONS - [method_name.to_s.upcase]).join(', ')}"

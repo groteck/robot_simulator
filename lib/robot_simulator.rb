@@ -4,59 +4,79 @@ require "robot_simulator/robot"
 
 # The class RobotSimulator has the controll of the io input and output
 class RobotSimulator
-  # This method initialize the robot and handle error messages
-  def self.place(input)
-    serialized_input =
-      input.match(/^PLACE\s(\d)\s(\d)\s(NORTH|EAST|SOUTH|WEST)$/)
+  PLACE_REGEXP = /^PLACE\s(\d)\s(\d)\s(NORTH|EAST|SOUTH|WEST)$/
+  ORDER_REGEXP = /^(MOVE|LEFT|RIGHT|REPORT)$/
+  INITIAL_MSG = "Wellcome to the Robot Simulator "\
+    "v#{RobotSimulator::VERSION}\n"\
+    "Pease place the bot into the surface with the order PLACE\n"\
+    "  Example: PLACE 3 2 NORTH\n"\
+    "  place a bot on the position 3,2 and the frontage to the north"
+  SUCCESS_MSG = 'Successful command!'
 
-    if serialized_input.nil?
-      puts_and_call('Invalid format, expected format is: PLACE Y X FRONTAGE',
-                    __method__)
+  attr_reader :input, :output, :robot, :last_message
+
+  def initialize(input, output)
+    @input = input
+    @output = output
+    wellcome_message
+    get_command
+  end
+
+  private
+
+  def wellcome_message
+    output.puts INITIAL_MSG
+  end
+
+  def get_command
+    output.puts last_message unless last_message.nil?
+    command = input.gets
+
+    if command =~ PLACE_REGEXP
+      place(command)
+    elsif command =~ ORDER_REGEXP
+      robot_command(command)
     else
-      begin
-        axis_y, axis_x, frontage = serialized_input.captures
-        @@robot = Robot.new(Location.new(axis_y.to_i, axis_x.to_i), frontage)
-        puts "Nice your robot was placed into #{@@robot.report}"
-      rescue Location::OutOfSurfaceException => e
-        puts_and_call(e.message, __method__)
-      end
+      unexpected_command(command)
+    end
+
+    get_command
+  end
+
+  def place(command)
+    serialized_input = command.match(PLACE_REGEXP)
+
+    begin
+      axis_y, axis_x, frontage = serialized_input.captures
+      @robot = Robot.new(Location.new(axis_y.to_i, axis_x.to_i), frontage)
+      @last_message = SUCCESS_MSG
+    rescue Location::OutOfSurfaceException => e
+      @last_message = e.message
     end
   end
 
-  # This method handle the robot commands and
-  # display the errors if some command is not possible or has a wrong format
-  def self.robot_command(input)
-    serialized_input = input.match(/^(MOVE|LEFT|RIGHT|REPORT)$/)
-    msg = command_msg(serialized_input)
-    puts_and_call(msg, __method__)
+  def unexpected_command(command)
+    @last_message =
+      "Unexpected command: #{command.delete("\n")}, "\
+      "expected commands are: #{available_commands}"
   end
 
-
-  def self.puts_and_call(message, method)
-    puts message
-    self.send(method, STDIN.gets)
-  end
-
-  private_class_method :puts_and_call
-
-  def self.command_msg(serialized_input)
-    if serialized_input.nil?
-      'Invalid command we expect MOVE, LEFT, RIGHT or REPORT'
+  def available_commands
+    if robot.nil?
+      'PLACE Y X Z'
     else
-      command = serialized_input.captures.first
-
-      begin
-        if command != 'REPORT'
-          @@robot.send(command.downcase)
-          "Successful command the bot status is #{@@robot.report}"
-        else
-          @@robot.report
-        end
-      rescue Location::OutOfSurfaceException => e
-        e.message
-      end
+      'PLACE Y X Z, MOVE, LEFT, RIGHT or REPORT'
     end
   end
 
-  private_class_method :command_msg
+  def robot_command(command)
+    serialized_input = command.match(ORDER_REGEXP).captures.first
+
+    begin
+      @last_message = robot.send(serialized_input.downcase)
+      @last_message = SUCCESS_MSG if serialized_input != 'REPORT'
+    rescue Location::OutOfSurfaceException => e
+      @last_message = e.message
+    end
+  end
 end
